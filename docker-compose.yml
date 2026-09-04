@@ -1,0 +1,31 @@
+services:
+  redis:
+    image: redis:7.4.2-alpine3.21
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+  server:
+    build: ./server
+    environment:
+      PORT: 3001
+      REDIS_URL: redis://redis:6379
+      SEC_USER_AGENT: ${SEC_USER_AGENT}
+      SEC_TIMEOUT_MS: ${SEC_TIMEOUT_MS:-12000}
+      FILINGS_CACHE_TTL_SECONDS: ${FILINGS_CACHE_TTL_SECONDS:-900}
+      SUMMARY_CACHE_TTL_SECONDS: ${SUMMARY_CACHE_TTL_SECONDS:-300}
+    depends_on:
+      redis:
+        condition: service_healthy
+  client:
+    build: .
+    ports:
+      - "5173:80"
+    depends_on:
+      - server
+volumes:
+  redis-data:
