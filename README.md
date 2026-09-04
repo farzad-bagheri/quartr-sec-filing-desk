@@ -2,7 +2,9 @@
 
 A TypeScript full-stack application for exploring SEC EDGAR filings by ticker. The React/Vite client calls an Express REST API. The server validates request and environment input with Zod, resolves SEC CIKs, normalizes filings, and caches normalized filings and summaries in Redis.
 
-**The repository is initialized by AI Assistant. Frontend is mostly built by AI as well due to time constraints.**
+## Project Initialization and Contributions
+
+The repository is initialized by AI Assistant. Frontend is mostly built by AI as well due to time constraints.
 My contribution primarily involves setting up the project structure, backend API, and initial frontend components. I see some gaps and potential enhancements in the current implementation, especially in the frontend UI and additional features for the filings dashboard.
 
 ## Current Structure
